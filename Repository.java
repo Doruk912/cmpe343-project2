@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class Repository {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/cmpe343";
+        String url = "jdbc:mysql://localhost:3306/cmpe343?useUnicode=true&characterEncoding=UTF-8";
         String username = "root";
         String password = "admin";
 
@@ -28,5 +28,6 @@ public class Repository {
     }
 }
 
+//chcp 65001
 //javac Repository.java
 //java -cp ".;mysql-connector-j-9.1.0.jar" Repository
