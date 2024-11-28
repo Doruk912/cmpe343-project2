@@ -7,6 +7,7 @@ public class Technician extends User {
     }
 
     public boolean menu() {
+        System.out.println("Technician");
         return false;
     }
 }

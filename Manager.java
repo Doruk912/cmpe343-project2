@@ -7,6 +7,7 @@ public class Manager extends User {
     }
 
     public boolean menu() {
+        System.out.println("Manager");
         return false;
     }
 }

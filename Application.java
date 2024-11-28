@@ -8,10 +8,9 @@ public class Application {
     private static String password = "admin";
     private static Connection connection;
 
-    public Application() {
+    static {
         try {
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connected to the database!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +35,7 @@ public class Application {
 
         while (true) {
             System.out.println("Username: ");
-            input = scanner.nextLine().trim().toUpperCase();
+            input = scanner.nextLine().trim().toLowerCase();
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
