@@ -1,6 +1,6 @@
 import java.sql.Date;
 
-public class User {
+abstract class User {
     private int userId;
     private String username;
     private String password;
@@ -24,6 +24,8 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.dateOfStart = dateOfStart;
     }
+
+    public abstract boolean menu();
 
     public int getUserId() {
         return userId;

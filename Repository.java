@@ -38,18 +38,64 @@ public class Repository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                user = new User(
-                        resultSet.getInt("user_id"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("role"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("phone_no"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("date_of_birth"),
-                        resultSet.getDate("date_of_start")
-                );
+                switch (resultSet.getString("role")) {
+                    case "MANAGER":
+                        user = new Manager(
+                            resultSet.getInt("user_id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("role"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("phone_no"),
+                            resultSet.getString("email"),
+                            resultSet.getDate("date_of_birth"),
+                            resultSet.getDate("date_of_start")
+                        );
+                        break;
+                    case "ENGINEER":
+                        user = new Engineer(
+                            resultSet.getInt("user_id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("role"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("phone_no"),
+                            resultSet.getString("email"),
+                            resultSet.getDate("date_of_birth"),
+                            resultSet.getDate("date_of_start")
+                        );
+                        break;
+                    case "TECHNICIAN":
+                        user = new Technician(
+                            resultSet.getInt("user_id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("role"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("phone_no"),
+                            resultSet.getString("email"),
+                            resultSet.getDate("date_of_birth"),
+                            resultSet.getDate("date_of_start")
+                        );
+                        break;
+                    case "INTERN":
+                        user = new Intern(
+                            resultSet.getInt("user_id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("role"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("phone_no"),
+                            resultSet.getString("email"),
+                            resultSet.getDate("date_of_birth"),
+                            resultSet.getDate("date_of_start")
+                        );
+                        break;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
