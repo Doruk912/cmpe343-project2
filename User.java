@@ -1,4 +1,4 @@
-import java.sql.Date;
+import java.sql.*;
 
 abstract class User {
     private int userId;
@@ -12,6 +12,11 @@ abstract class User {
     private Date dateOfBirth;
     private Date dateOfStart;
 
+    private String url = "jdbc:mysql://localhost:3306/cmpe343";
+    private String db_username = "root";
+    private String db_password = "admin";
+    private Connection connection;
+
     public User(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         this.userId = userId;
         this.username = username;
@@ -23,6 +28,12 @@ abstract class User {
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.dateOfStart = dateOfStart;
+
+        try {
+            connection = DriverManager.getConnection(url, db_username, db_password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract boolean menu();
@@ -41,6 +52,15 @@ abstract class User {
 
     public void setUsername(String username) {
         this.username = username;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET username = ? WHERE user_id = ?");
+            preparedStatement.setString(1, username);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getPassword() {
@@ -49,6 +69,15 @@ abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getRole() {
@@ -57,6 +86,15 @@ abstract class User {
 
     public void setRole(String role) {
         this.role = role;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET role = ? WHERE user_id = ?");
+            preparedStatement.setString(1, role);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getFirstName() {
@@ -65,6 +103,15 @@ abstract class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET first_name = ? WHERE user_id = ?");
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getLastName() {
@@ -73,6 +120,15 @@ abstract class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET last_name = ? WHERE user_id = ?");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getPhoneNo() {
@@ -81,6 +137,15 @@ abstract class User {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET phone_no = ? WHERE user_id = ?");
+            preparedStatement.setString(1, phoneNo);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getEmail() {
@@ -89,6 +154,15 @@ abstract class User {
 
     public void setEmail(String email) {
         this.email = email;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET email = ? WHERE user_id = ?");
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Date getDateOfBirth() {
@@ -97,6 +171,15 @@ abstract class User {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET date_of_birth = ? WHERE user_id = ?");
+            preparedStatement.setDate(1, dateOfBirth);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Date getDateOfStart() {
@@ -105,5 +188,14 @@ abstract class User {
 
     public void setDateOfStart(Date dateOfStart) {
         this.dateOfStart = dateOfStart;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET date_of_start = ? WHERE user_id = ?");
+            preparedStatement.setDate(1, dateOfStart);
+            preparedStatement.setInt(2, this.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
