@@ -47,7 +47,13 @@ public class Application {
                     input = scanner.nextLine().trim();
                     if (resultSet.getString("password").equals(input)) {
                         User user = repository.getUserById(resultSet.getInt("user_id"));
+                        boolean flag = true;
                         do {
+                            if (flag) {
+                                flag = false;
+                            } else {
+                                scanner.nextLine();
+                            }
                             ClearScreen();
                         } while (user.menu());
                     } else {

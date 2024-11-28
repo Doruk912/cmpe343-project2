@@ -36,29 +36,34 @@ public class Engineer extends User {
         switch (input) {
             case "display":
                 System.out.println(this);
-                scanner.nextLine();
+                System.out.println("Press enter to continue...");
                 break;
             case "update username":
                 System.out.println("Enter new username:");
                 input = scanner.nextLine().trim().toLowerCase();
                 this.setUsername(input);
+                System.out.println("Username updated.");
                 break;
             case "update password":
                 System.out.println("Enter new password:");
                 input = scanner.nextLine().trim();
                 this.setPassword(input);
+                System.out.println("Password updated.");
                 break;
             case "update first name":
                 System.out.println("Enter new first name:");
                 input = scanner.nextLine().trim();
                 this.setFirstName(input);
+                System.out.println("First name updated.");
                 break;
             case "update last name":
                 System.out.println("Enter new last name:");
                 input = scanner.nextLine().trim();
                 this.setLastName(input);
+                System.out.println("Last name updated.");
                 break;
             case "logout":
+                System.out.println("Logged out.");
                 return false;
         }
         
