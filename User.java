@@ -198,4 +198,12 @@ abstract class User {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        String result = "Full name: " + this.getFirstName() + " " +  this.getLastName() + "\n";
+        result += "Email: " + this.getEmail() + "\n";
+        result += "Phone no: " + this.getPhoneNo() + "\n";
+        return result;
+    }
 }

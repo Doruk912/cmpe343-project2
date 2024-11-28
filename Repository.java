@@ -25,7 +25,7 @@ public class Repository {
                 System.out.println("First Name: " + resultSet.getString("first_name"));
                 System.out.println("Email: " + resultSet.getString("email"));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -43,8 +43,8 @@ public class Application {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    System.out.println("Password: ");
-                    input = scanner.nextLine().trim().toUpperCase();
+                    System.out.println("Password:");
+                    input = scanner.nextLine().trim();
                     if (resultSet.getString("password").equals(input)) {
                         User user = repository.getUserById(resultSet.getInt("user_id"));
                         do {
