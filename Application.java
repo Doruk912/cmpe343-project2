@@ -52,6 +52,7 @@ public class Application {
                             if (flag) {
                                 flag = false;
                             } else {
+                                System.out.println("Press enter to continue...");
                                 scanner.nextLine();
                             }
                             ClearScreen();

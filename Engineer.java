@@ -36,7 +36,6 @@ public class Engineer extends User {
         switch (input) {
             case "display":
                 System.out.println(this);
-                System.out.println("Press enter to continue...");
                 break;
             case "update username":
                 System.out.println("Enter new username:");
