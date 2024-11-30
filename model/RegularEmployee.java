@@ -1,14 +1,16 @@
+package model;
+
 import java.sql.Date;
 import java.util.Scanner;
 
-public class Technician extends User {
+public abstract class RegularEmployee extends User{
 
-    public Technician(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
+    public RegularEmployee(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
     }
 
     public boolean menu() {
-        System.out.println("[Technician]");
+        System.out.println("[" + this.getRole() + "]");
         System.out.println("Logged in as " + this.getUsername());
 
         Scanner scanner = new Scanner(System.in);
@@ -65,7 +67,6 @@ public class Technician extends User {
                 System.out.println("Logged out.");
                 return false;
         }
-
         return true;
     }
 }

@@ -1,6 +1,8 @@
+package model;
+
 import java.sql.*;
 
-abstract class User {
+public abstract class User {
     private int userId;
     private String username;
     private String password;
