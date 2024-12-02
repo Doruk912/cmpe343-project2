@@ -1,9 +1,49 @@
 package util;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Algorithm {
-    public static void radixSort(int[] array) {
+
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
+
+    public Algorithm() {
+        runAlgorithm();
+    }
+
+    private void runAlgorithm(){
+        System.out.println("Enter the dataset size (1000 - 10000):");
+        int size = 0;
+        while (size < 1000 || size > 10000) {
+            size = scanner.nextInt();
+            if (size < 1000 || size > 10000) {
+                System.out.println("Invalid size!");
+            }
+        }
+
+        int[] dataset = new int[size];
+        for (int i = 0; i < size; i++) {
+            dataset[i] = random.nextInt(20001) - 10000;
+        }
+
+        System.out.println("Radix Sort is working...");
+        long start = System.nanoTime();
+        Algorithm.radixSort(dataset.clone());
+        long radixTime = System.nanoTime() - start;
+
+        System.out.println("Shell Sort is working...");
+        start = System.nanoTime();
+        Algorithm.shellSort(dataset.clone());
+        long shellTime = System.nanoTime() - start;
+
+        System.out.println("Sorting times:");
+        System.out.println("Radix Sort: " + radixTime);
+        System.out.println("Shell Sort: " + shellTime);
+    }
+
+    private static void radixSort(int[] array) {
         int max = Arrays.stream(array).max().getAsInt();
         int exp = 1;
 
@@ -36,7 +76,7 @@ public class Algorithm {
         System.arraycopy(output, 0, array, 0, n);
     }
 
-    public static void shellSort(int[] array) {
+    private static void shellSort(int[] array) {
         int n = array.length;
 
         for (int gap = n / 2; gap > 0; gap /= 2) {

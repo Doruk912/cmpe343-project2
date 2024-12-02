@@ -12,7 +12,7 @@ public class Manager extends User {
     }
 
     public boolean menu() {
-        System.out.println("[" + this.getRole() + "]");
+        System.out.println("[" + this.getRole() + " MENU]");
         System.out.println("Logged in as " + this.getUsername());
 
         Scanner scanner = new Scanner(System.in);
@@ -28,37 +28,20 @@ public class Manager extends User {
 
         switch (input) {
             case "display":
-                System.out.println(this);
+                System.out.println("\n" + this);
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
                 break;
             case "algorithms":
-                System.out.println("Enter the dataset size (1000 - 10000):");
-                int size = scanner.nextInt();
-                if (size < 1000 || size > 10000) {
-                    System.out.println("Invalid size!");
-                    break;
-                }
-                int[] dataset = new int[size];
-                for (int i = 0; i < size; i++) {
-                    dataset[i] = (int) (Math.random() * 20001) - 10000;
-                }
-
-                System.out.println("Radix Sort is working...");
-                long start = System.nanoTime();
-                Algorithm.radixSort(dataset.clone());
-                long radixTime = System.nanoTime() - start;
-
-                System.out.println("Shell Sort is working...");
-                start = System.nanoTime();
-                Algorithm.shellSort(dataset.clone());
-                long shellTime = System.nanoTime() - start;
-
-                System.out.println("Sorting times:");
-                System.out.println("Radix Sort: " + radixTime);
-                System.out.println("Shell Sort: " + shellTime);
+                new Algorithm();
                 break;
             case "logout":
                 System.out.println("Logged out.");
                 return false;
+            default:
+                clearScreen();
+                System.out.println("Invalid command.");
+                break;
         }
         return true;
     }

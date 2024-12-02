@@ -37,7 +37,7 @@ public abstract class RegularEmployee extends User{
 
         switch (input) {
             case "display":
-                System.out.println(this);
+                System.out.println("\n" + this);
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
                 break;
