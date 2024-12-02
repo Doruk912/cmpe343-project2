@@ -10,7 +10,7 @@ public abstract class RegularEmployee extends User{
     }
 
     public boolean menu() {
-        System.out.println("[" + this.getRole() + "]");
+        System.out.println("[" + this.getRole() + " MENU]");
         System.out.println("Logged in as " + this.getUsername());
 
         Scanner scanner = new Scanner(System.in);
@@ -38,6 +38,8 @@ public abstract class RegularEmployee extends User{
         switch (input) {
             case "display":
                 System.out.println(this);
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
                 break;
             case "update username":
                 System.out.println("Enter new username:");
@@ -66,6 +68,10 @@ public abstract class RegularEmployee extends User{
             case "logout":
                 System.out.println("Logged out.");
                 return false;
+            default:
+                clearScreen();
+                System.out.println("Invalid command.");
+                break;
         }
         return true;
     }

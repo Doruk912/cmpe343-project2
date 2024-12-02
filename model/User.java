@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.sql.*;
 
 public abstract class User {
@@ -198,6 +199,17 @@ public abstract class User {
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException ex) {
+            System.out.println("Error while clearing screen");
         }
     }
 

@@ -12,11 +12,12 @@ public class Application {
 
         Authentication authentication = new Authentication();
         while (true) {
+            clearScreen();
             System.out.println("Some ASCII art");
             System.out.println("Welcome to the system!");
             User loggedInUser = authentication.authenticate();
             clearScreen();
-            System.out.println("Welcome " + loggedInUser.getUsername() + "!");
+            System.out.println("Welcome " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
             boolean flag = true;
             while(flag){
                 flag = loggedInUser.menu();
@@ -39,3 +40,6 @@ public class Application {
 //chcp 65001
 //javac util/Application.java
 //java -cp ".;mysql-connector-j-9.1.0.jar" util.Application
+
+//javac -d out -cp ".;mysql-connector-j-9.1.0.jar" util/Application.java
+//java -cp ".;out;mysql-connector-j-9.1.0.jar" util.Application
