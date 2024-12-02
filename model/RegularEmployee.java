@@ -11,7 +11,7 @@ public abstract class RegularEmployee extends User{
 
     public boolean menu() {
         System.out.println("[" + this.getRole() + " MENU]");
-        System.out.println("Logged in as " + this.getUsername());
+        System.out.println("Logged in as " + this.getUsername() + "\n");
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -23,20 +23,21 @@ public abstract class RegularEmployee extends User{
                 System.out.println("Password cannot be 'password' try again:");
                 input = scanner.nextLine().trim();
             }
-
             this.setPassword(input);
         }
 
         System.out.println("Some useful commands:");
-        System.out.println("display: Displays your profile");
-        System.out.println("update <field>: Updates information");
-        System.out.println("logout: Returns to login screen");
+        System.out.println("1. display: Displays your profile");
+        System.out.println("2. update <field>: Updates information");
+        System.out.println("3. logout: Returns to login screen");
+        System.out.println();
 
-        System.out.println("Enter command:");
+        System.out.println("Enter command: ");
         input = scanner.nextLine().trim().toLowerCase();
 
         switch (input) {
             case "display":
+            case "1":
                 System.out.println("\n" + this);
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
@@ -66,6 +67,7 @@ public abstract class RegularEmployee extends User{
                 System.out.println("Last name updated.");
                 break;
             case "logout":
+            case "3":
                 System.out.println("Logged out.");
                 return false;
             default:

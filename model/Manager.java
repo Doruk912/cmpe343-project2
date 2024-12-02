@@ -13,29 +13,33 @@ public class Manager extends User {
 
     public boolean menu() {
         System.out.println("[" + this.getRole() + " MENU]");
-        System.out.println("Logged in as " + this.getUsername());
+        System.out.println("Logged in as " + this.getUsername() + "\n");
 
         Scanner scanner = new Scanner(System.in);
         String input;
 
         System.out.println("Some useful commands:");
-        System.out.println("display: Displays your profile");
-        System.out.println("algorithms: Compares sorting algorithms");
-        System.out.println("logout: Returns to login screen");
+        System.out.println("1. display: Displays your profile");
+        System.out.println("2. algorithms: Compares sorting algorithms");
+        System.out.println("3. logout: Returns to login screen");
+        System.out.println();
 
-        System.out.println("Enter command:");
+        System.out.println("Enter command: ");
         input = scanner.nextLine().trim().toLowerCase();
 
         switch (input) {
             case "display":
+            case "1":
                 System.out.println("\n" + this);
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
                 break;
             case "algorithms":
+            case "2":
                 new Algorithm();
                 break;
             case "logout":
+            case "3":
                 System.out.println("Logged out.");
                 return false;
             default:
