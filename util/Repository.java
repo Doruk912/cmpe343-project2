@@ -3,6 +3,7 @@ package util;
 import model.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Repository {
     private final String url = "jdbc:mysql://localhost:3306/cmpe343";
@@ -162,5 +163,22 @@ public class Repository {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        try {
+            ArrayList<User> users = new ArrayList<User>();
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT user_id FROM users");
+            while (resultSet.next()) {
+                users.add(this.getUserById(resultSet.getInt(1)));
+            }
+
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

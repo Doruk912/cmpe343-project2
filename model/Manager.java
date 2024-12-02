@@ -1,6 +1,7 @@
 package model;
 
 import util.Algorithm;
+import util.Repository;
 
 import java.sql.Date;
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public class Manager extends User {
 
         System.out.println("Some useful commands:");
         System.out.println("display: Displays your profile");
+        System.out.println("employees: Lists all employees");
         System.out.println("algorithms: Compares sorting algorithms");
         System.out.println("logout: Returns to login screen");
 
@@ -40,6 +42,13 @@ public class Manager extends User {
         switch (input) {
             case "display":
                 System.out.println("\n" + this);
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
+                break;
+            case "employees":
+                Repository repo = new Repository();
+                for (User u : repo.getAllUsers())
+                    System.out.println(u + "\n");
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
                 break;
