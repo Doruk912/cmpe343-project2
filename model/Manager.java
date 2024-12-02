@@ -25,7 +25,6 @@ public class Manager extends User {
                 System.out.println("Password cannot be 'password' try again:");
                 input = scanner.nextLine().trim();
             }
-
             this.setPassword(input);
         }
 
