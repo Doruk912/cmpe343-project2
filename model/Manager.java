@@ -18,6 +18,17 @@ public class Manager extends User {
         Scanner scanner = new Scanner(System.in);
         String input;
 
+        if (this.getPassword().equals("password")) {
+            System.out.println("You need to enter another password:");
+            input = scanner.nextLine().trim();
+            while (input.equals("password")) {
+                System.out.println("Password cannot be 'password' try again:");
+                input = scanner.nextLine().trim();
+            }
+
+            this.setPassword(input);
+        }
+
         System.out.println("Some useful commands:");
         System.out.println("1. display: Displays your profile");
         System.out.println("2. algorithms: Compares sorting algorithms");
