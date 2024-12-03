@@ -181,4 +181,27 @@ public class Repository {
             return null;
         }
     }
+
+    public void addUser(String usr, String role, String first, String last) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, first_name, last_name) VALUES (?, 'password', ?, ?, ?)");
+            preparedStatement.setString(1, usr);
+            preparedStatement.setString(2, role);
+            preparedStatement.setString(3, first);
+            preparedStatement.setString(4, last);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeUser(int user_id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE user_id = ?");
+            preparedStatement.setInt(1, user_id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

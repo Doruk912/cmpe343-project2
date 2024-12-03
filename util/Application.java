@@ -1,10 +1,7 @@
 package util;
 
 import model.User;
-
-import java.util.Scanner;
 import java.io.IOException;
-import java.sql.*;
 
 public class Application {
 
