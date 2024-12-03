@@ -1,49 +1,103 @@
+package util;
+
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import static util.Application.clearScreen;
 
-public class Manager {
 
-    public static void radixSort(int[] array) {
-        int max = findMax(array);
-        int min = findMin(array);
+public class Algorithm {
 
-        int offset = Math.abs(min); // Shift negatives to positive
-        for (int i = 0; i < array.length; i++) {
-            array[i] += offset;
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
+
+    public Algorithm() {
+        runAlgorithm();
+    }
+
+    private void runAlgorithm() {
+        clearScreen();
+        int size = askForDataSize();
+        int[] dataset = datasetGenerator(size);
+
+        // Uncomment to include Radix Sort
+        /*
+        System.out.println("Radix Sort is working...");
+        long start = System.nanoTime();
+        Algorithm.radixSort(dataset.clone());
+        long radixTime = System.nanoTime() - start;
+        */
+
+        System.out.println("Shell Sort is working...");
+        long start = System.nanoTime();
+        Algorithm.shellSort(dataset.clone());
+        long shellTime = System.nanoTime() - start;
+
+        System.out.println("Heap Sort is working...");
+        start = System.nanoTime();
+        Algorithm.heapSort(dataset.clone());
+        long heapTime = System.nanoTime() - start;
+
+        System.out.println("Insertion Sort is working...");
+        start = System.nanoTime();
+        Algorithm.insertionSort(dataset.clone());
+        long insertionTime = System.nanoTime() - start;
+
+        System.out.println("Sorting times:");
+        // Uncomment to display Radix Sort time
+        // System.out.println("Radix Sort: " + radixTime + " ns");
+        System.out.println("Shell Sort: " + shellTime + " ns");
+        System.out.println("Heap Sort: " + heapTime + " ns");
+        System.out.println("Insertion Sort: " + insertionTime + " ns");
+        System.out.println("Press enter to continue...");
+        scanner.nextLine(); // Consume the leftover newline character
+        scanner.nextLine();
+        clearScreen();
+
+    }
+
+    private int askForDataSize() {
+        System.out.println("Enter the dataset size (1000 - 10000):");
+        int size = 0;
+        while (size < 1000 || size > 10000) {
+            size = scanner.nextInt();
+            if (size < 1000 || size > 10000) {
+                System.out.println("Invalid size!");
+            }
         }
+        return size;
+    }
 
+    private int[] datasetGenerator(int size) {
+        int[] dataset = new int[size];
+        for (int i = 0; i < size; i++)
+            dataset[i] = random.nextInt(20001) - 10000;
+        return dataset;
+    }
+
+    private long timeKeeper(int[] dataset, Runnable sortAlgorithm, int runs){
+        long totalTime = 0;
+        for (int i = 0; i < runs; i++) {
+            int[] dataCopy = dataset.clone();
+            long startTime = System.nanoTime();
+            sortAlgorithm.run();
+            long endTime =  System.nanoTime() - startTime;
+            totalTime += endTime - startTime;
+        }
+        return totalTime;
+    }
+
+    private static void radixSort (int[] array){
+        int max = Arrays.stream(array).max().getAsInt();
         int exp = 1;
-        while ((max + offset) / exp > 0) {
+
+        while (max / exp > 0) {
             countingSortByDigit(array, exp);
             exp *= 10;
         }
-
-        for (int i = 0; i < array.length; i++) {
-            array[i] -= offset; // Shift back to original range
-        }
     }
 
-    private static int findMax(int[] array) {
-        int max = array[0];
-        for (int num : array) {
-            if (num > max) {
-                max = num;
-            }
-        }
-        return max;
-    }
-
-    private static int findMin(int[] array) {
-        int min = array[0];
-        for (int num : array) {
-            if (num < min) {
-                min = num;
-            }
-        }
-        return min;
-    }
-
-    private static void countingSortByDigit(int[] array, int exp) {
+    private static void countingSortByDigit (int[] array, int exp){
         int n = array.length;
         int[] output = new int[n];
         int[] count = new int[10];
@@ -66,7 +120,7 @@ public class Manager {
         System.arraycopy(output, 0, array, 0, n);
     }
 
-    public static void shellSort(int[] array) {
+    private static void shellSort(int[] array){
         int n = array.length;
 
         for (int gap = n / 2; gap > 0; gap /= 2) {
@@ -83,57 +137,64 @@ public class Manager {
         }
     }
 
-    public static void algorithms() {
-        Scanner scanner = new Scanner(System.in);
-
-        // Get dataset size from user
-        int datasetSize = 0;
-        while (datasetSize < 1000 || datasetSize > 10000) {
-            System.out.print("Enter the dataset size (1000 - 10000): ");
-            datasetSize = scanner.nextInt();
-            if (datasetSize < 1000 || datasetSize > 10000) {
-                System.out.println("Invalid input. Please enter a number between 1000 and 10000.");
-            }
+    public static void heapSort(int[] array) 
+    {
+        int n = array.length;
+        for (int i = n / 2 - 1; i >= 0; i--) 
+        {
+            heapify(array, n, i);
         }
-
-        // Generate random numbers
-        int[] datasetForRadixSort = new int[datasetSize];
-        int[] datasetForShellSort = new int[datasetSize];
-        Random random = new Random();
-        for (int i = 0; i < datasetSize; i++) {
-            int num = random.nextInt(20000) - 10000; // Range -10000 to 10000
-            datasetForRadixSort[i] = num;
-            datasetForShellSort[i] = num;
+        for (int i = n - 1; i > 0; i--) 
+        {
+            int temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+            heapify(array, i, 0);
         }
-
-        // Apply Radix Sort
-        System.out.println("Radix Sort:");
-        long startTime = System.nanoTime();
-        radixSort(datasetForRadixSort);
-        long endTime = System.nanoTime();
-        System.out.println("Execution time: " + (endTime - startTime) + " ns");
-        System.out.println("First 10 elements after Radix Sort:");
-        for (int i = 0; i < 10 && i < datasetSize; i++) {
-            System.out.print(datasetForRadixSort[i] + " ");
-        }
-        System.out.println("\n");
-
-        // Apply Shell Sort
-        System.out.println("Shell Sort:");
-        startTime = System.nanoTime();
-        shellSort(datasetForShellSort);
-        endTime = System.nanoTime();
-        System.out.println("Execution time: " + (endTime - startTime) + " ns");
-        System.out.println("First 10 elements after Shell Sort:");
-        for (int i = 0; i < 10 && i < datasetSize; i++) {
-            System.out.print(datasetForShellSort[i] + " ");
-        }
-        System.out.println("\n");
-
-        scanner.close();
     }
 
-    public static void main(String[] args) {
-        algorithms();
+    private static void heapify(int[] array, int n, int i) 
+    {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && array[left] > array[largest]) 
+        {
+            largest = left;
+        }
+
+        if (right < n && array[right] > array[largest]) 
+        {
+            largest = right;
+        }
+
+        if (largest != i) 
+        {
+            int swap = array[i];
+            array[i] = array[largest];
+            array[largest] = swap;
+
+            heapify(array, n, largest);
+        }
+    }
+
+    public static void insertionSort(int[] array) 
+    {
+        int n = array.length;
+
+        for (int i = 1; i < n; i++) 
+        {
+            int key = array[i];
+            int j = i - 1;
+
+            while (j >= 0 && array[j] > key) 
+            {
+                array[j + 1] = array[j];
+                j--;
+            }
+
+            array[j + 1] = key;
+        }
     }
 }
