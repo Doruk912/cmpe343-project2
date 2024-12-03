@@ -18,23 +18,27 @@ public class Algorithm {
     private void runAlgorithm() {
         clearScreen();
         int size = askForDataSize();
+        int runs = 30;
         int[] dataset = datasetGenerator(size);
 
-        /*
+
         System.out.println("Radix Sort is working...");
-        long start = System.nanoTime();
-        Algorithm.radixSort(dataset.clone());
-        long radixTime = System.nanoTime() - start;
-         */
+        long radixTime = timeKeeper(dataset,() -> radixSort(), runs);
 
         System.out.println("Shell Sort is working...");
-        long start = System.nanoTime();
-        Algorithm.shellSort(dataset.clone());
-        long shellTime = System.nanoTime() - start;
+        long shellTime = timeKeeper(dataset,() -> shellSort(), runs);
+
+        System.out.println("Heap Sort is working...");
+        long heapTime = timeKeeper(dataset,() -> heapSort(), runs);
+
+        System.out.println("Insertion Sort is working...");
+        long insertionTime = timeKeeper(dataset,() -> insertionSort(), runs);
 
         System.out.println("Sorting times:");
-        //System.out.println("Radix Sort: " + radixTime);
+        System.out.println("Radix Sort: " + radixTime);
         System.out.println("Shell Sort: " + shellTime);
+        System.out.println("Heap Sort: " + heapTime);
+        System.out.println("Insertion Sort: " + insertionTime);
         System.out.println("Press enter to continue...");
         scanner.nextLine(); //Consume the leftover newline character
         scanner.nextLine();
@@ -60,11 +64,16 @@ public class Algorithm {
         return dataset;
     }
 
-    private long timeKeeper(int[] dataset, Runnable sortAlgorithm){
-        int[] dataCopy = dataset.clone();
-        long startTime = System.nanoTime();
-        sortAlgorithm.run();
-        return System.nanoTime() - startTime;
+    private long timeKeeper(int[] dataset, Runnable sortAlgorithm, int runs){
+        long totalTime = 0;
+        for (int i = 0; i < runs; i++) {
+            int[] dataCopy = dataset.clone();
+            long startTime = System.nanoTime();
+            sortAlgorithm.run();
+            long endTime =  System.nanoTime() - startTime;
+            totalTime += endTime - startTime;
+        }
+        return totalTime;
     }
 
     private static void radixSort (int[] array){
