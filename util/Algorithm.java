@@ -4,29 +4,22 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class Algorithm {
 
     Scanner scanner = new Scanner(System.in);
     Random random = new Random();
 
-    public Algorithm() {
+    public Algorithm(){
         runAlgorithm();
     }
 
+    /**
+     *
+     */
     private void runAlgorithm(){
-        System.out.println("Enter the dataset size (1000 - 10000):");
-        int size = 0;
-        while (size < 1000 || size > 10000) {
-            size = scanner.nextInt();
-            if (size < 1000 || size > 10000) {
-                System.out.println("Invalid size!");
-            }
-        }
-
-        int[] dataset = new int[size];
-        for (int i = 0; i < size; i++) {
-            dataset[i] = random.nextInt(20001) - 10000;
-        }
+        int size = askForDataSize();
+        int [] dataset = datasetGenerator();
 
         System.out.println("Radix Sort is working...");
         long start = System.nanoTime();
@@ -41,7 +34,34 @@ public class Algorithm {
         System.out.println("Sorting times:");
         System.out.println("Radix Sort: " + radixTime);
         System.out.println("Shell Sort: " + shellTime);
+        }
+
+
+            }
+        }
     }
+    private int askForDataSize(){
+        System.out.println("Enter the dataset size (1000 - 10000):");
+        int size = 0;
+        while (size < 1000 || size > 10000) {
+            size = scanner.nextInt();
+            }
+        if (size < 1000 || size > 10000) {
+            System.out.println("Invalid size!");
+            }
+        }
+    private int [] datasetGenerator(){
+        int[] dataset = new int[size];
+        for (int i = 0; i < size; i++) {
+            dataset[i] = random.nextInt(20001) - 10000;
+        }
+
+    private long timeKeeper (int[] dataset, Runnable sortAlgorithm){
+            int[] dataCopy = dataset.clone();
+            long startTime = System.nanoTime();
+            sortAlgorithm.run();
+            return System.nanoTime() - startTime;
+        }
 
     private static void radixSort(int[] array) {
         int max = Arrays.stream(array).max().getAsInt();
