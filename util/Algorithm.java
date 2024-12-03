@@ -8,21 +8,28 @@ import java.util.Random;
 import java.util.Scanner;
 import static util.Application.clearScreen;
 
-
+/**
+ * Algorithm class is created to benchmark the various sorting algorithms
+ * while checking their correctness utilizing the default java sorting algorithm.
+ */
 public class Algorithm {
 
     Scanner scanner = new Scanner(System.in);
     Random random = new Random();
 
     /**
-     *
+     * Constructor for the Algorithm class.
+     * It starts the algorithm execution by calling runAlgorithm().
      */
     public Algorithm() {
         runAlgorithm();
     }
 
     /**
-     *
+     * Asks for a dataset size.
+     * Generates the dataset.
+     * Verifies that each sorting algorithm works properly.
+     * Times each of the sorting algorithms to measure their performances.
      */
     private void runAlgorithm() {
         clearScreen();
@@ -56,8 +63,8 @@ public class Algorithm {
     }
 
     /**
-     *
-     * @return
+     * Asks the user for the dataset size, ensuring it's between 1000 and 10000.
+     * @return the size of the dataset entered by the user.
      */
     private int askForDataSize() {
         System.out.println("Enter the dataset size (1000 - 10000):");
@@ -72,9 +79,10 @@ public class Algorithm {
     }
 
     /**
+     *Generates the dataset with random integers between -10000 and 10000.
      *
-     * @param size
-     * @return
+     * @param size number of the elements in the dataset.
+     * @return an array of the generated data set.
      */
     private int[] datasetGenerator(int size) {
         int[] dataset = new int[size];
@@ -84,10 +92,11 @@ public class Algorithm {
     }
 
     /**
+     *Verifies if the sorting algorithms are sorting the data set correctly by comparing them to default java sorting algorithm.
      *
-     * @param dataset
-     * @param algorithm
-     * @return
+     * @param dataset the data set to sort
+     * @param algorithm the name of the sorting algorithm to use
+     * @return true if the sorting algorithm works correctly, false otherwise.
      */
     private boolean correctSorting(int[] dataset, String algorithm) {
         int[] expected = dataset.clone();
@@ -115,8 +124,11 @@ public class Algorithm {
     }
 
     /**
+     * Final verification, checks if the sorting algorithms gave the same output as the default sort provieded by java.
+     * Prints out the result on the console. It uses a list to add the failed algorithms to a list and displays those failed
+     * algorithms.
      *
-     * @param dataset
+     * @param dataset the dataset to verify with all sorting algorithms.
      */
     private void verifySortingAlgorithms(int[] dataset) {
         List<String> failedAlgorithms = new ArrayList<>();
