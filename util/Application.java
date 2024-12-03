@@ -15,7 +15,7 @@ public class Application {
             clearScreen();
             final String BLUE = "\u001B[34m";
             final String RESET = "\u001B[0m";  
-            System.out.println(BLUE + "                                                                                                       
+            System.out.println(BLUE + """                                                                                                       
                                                                                 
                                ,(#########((####/.                              
                         *##(###((###########(#########(#                        
@@ -49,14 +49,7 @@ public class Application {
                                           ########/  
 
             
-            "+ RESET);
-            System.out.println(BLUE +"
-               ____                 _ __    _____                            __  _         
-  / __/_ ____ _  __ _  (_) /_  / ___/__  _______  ___  _______ _/ /_(_)__  ___ 
- _\ \/ // /  ' \/  ' \/ / __/ / /__/ _ \/ __/ _ \/ _ \/ __/ _ `/ __/ / _ \/ _ \
-/___/\_,_/_/_/_/_/_/_/_/\__/  \___/\___/_/ / .__/\___/_/  \_,_/\__/_/\___/_//_/
-
-            "+ RESET);
+            """+ RESET);
             System.out.println("Welcome to the system!");
             User loggedInUser = authentication.authenticate();
             clearScreen();
