@@ -46,10 +46,10 @@ public class Algorithm {
         long insertionTime = timeKeeper(dataset, "Insertion", runs)/1000000;
 
         System.out.println("Sorting times:");
-        System.out.printf("%-15s: %d ms%n", "Radix Sort", radixTime);
-        System.out.printf("%-15s: %d ms%n", "Shell Sort", shellTime);
-        System.out.printf("%-15s: %d ms%n", "Heap Sort", heapTime);
-        System.out.printf("%-15s: %d ms%n", "Insertion Sort", insertionTime);
+        System.out.printf("%-15s: %.3f ms%n", "Radix Sort", radixTime);
+        System.out.printf("%-15s: %.3f ms%n", "Shell Sort", shellTime);
+        System.out.printf("%-15s: %.3f ms%n", "Heap Sort", heapTime);
+        System.out.printf("%-15s: %.3f ms%n", "Insertion Sort", insertionTime);
         scanner.nextLine(); // Consume the leftover newline character
         scanner.nextLine();
         clearScreen();
