@@ -18,31 +18,42 @@ public class Algorithm {
     private void runAlgorithm() {
         clearScreen();
         int size = askForDataSize();
-        int runs = 30;
         int[] dataset = datasetGenerator(size);
 
-
+        // Uncomment to include Radix Sort
+        /*
         System.out.println("Radix Sort is working...");
-        long radixTime = timeKeeper(dataset,() -> radixSort(), runs);
+        long start = System.nanoTime();
+        Algorithm.radixSort(dataset.clone());
+        long radixTime = System.nanoTime() - start;
+        */
 
         System.out.println("Shell Sort is working...");
-        long shellTime = timeKeeper(dataset,() -> shellSort(), runs);
+        long start = System.nanoTime();
+        Algorithm.shellSort(dataset.clone());
+        long shellTime = System.nanoTime() - start;
 
         System.out.println("Heap Sort is working...");
-        long heapTime = timeKeeper(dataset,() -> heapSort(), runs);
+        start = System.nanoTime();
+        Algorithm.heapSort(dataset.clone());
+        long heapTime = System.nanoTime() - start;
 
         System.out.println("Insertion Sort is working...");
-        long insertionTime = timeKeeper(dataset,() -> insertionSort(), runs);
+        start = System.nanoTime();
+        Algorithm.insertionSort(dataset.clone());
+        long insertionTime = System.nanoTime() - start;
 
         System.out.println("Sorting times:");
-        System.out.println("Radix Sort: " + radixTime);
-        System.out.println("Shell Sort: " + shellTime);
-        System.out.println("Heap Sort: " + heapTime);
-        System.out.println("Insertion Sort: " + insertionTime);
+        // Uncomment to display Radix Sort time
+        // System.out.println("Radix Sort: " + radixTime + " ns");
+        System.out.println("Shell Sort: " + shellTime + " ns");
+        System.out.println("Heap Sort: " + heapTime + " ns");
+        System.out.println("Insertion Sort: " + insertionTime + " ns");
         System.out.println("Press enter to continue...");
-        scanner.nextLine(); //Consume the leftover newline character
+        scanner.nextLine(); // Consume the leftover newline character
         scanner.nextLine();
         clearScreen();
+
     }
 
     private int askForDataSize() {
