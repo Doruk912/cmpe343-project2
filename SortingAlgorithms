@@ -1,15 +1,46 @@
-import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
-public class SortingAlgorithms {
+public class Manager {
 
     public static void radixSort(int[] array) {
-        int max = Arrays.stream(array).max().getAsInt();
-        int exp = 1;
+        int max = findMax(array);
+        int min = findMin(array);
 
-        while (max / exp > 0) {
+        int offset = Math.abs(min); // Shift negatives to positive
+        for (int i = 0; i < array.length; i++) {
+            array[i] += offset;
+        }
+
+        int exp = 1;
+        while ((max + offset) / exp > 0) {
             countingSortByDigit(array, exp);
             exp *= 10;
         }
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] -= offset; // Shift back to original range
+        }
+    }
+
+    private static int findMax(int[] array) {
+        int max = array[0];
+        for (int num : array) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+
+    private static int findMin(int[] array) {
+        int min = array[0];
+        for (int num : array) {
+            if (num < min) {
+                min = num;
+            }
+        }
+        return min;
     }
 
     private static void countingSortByDigit(int[] array, int exp) {
@@ -51,34 +82,58 @@ public class SortingAlgorithms {
             }
         }
     }
+
+    public static void algorithms() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Get dataset size from user
+        int datasetSize = 0;
+        while (datasetSize < 1000 || datasetSize > 10000) {
+            System.out.print("Enter the dataset size (1000 - 10000): ");
+            datasetSize = scanner.nextInt();
+            if (datasetSize < 1000 || datasetSize > 10000) {
+                System.out.println("Invalid input. Please enter a number between 1000 and 10000.");
+            }
+        }
+
+        // Generate random numbers
+        int[] datasetForRadixSort = new int[datasetSize];
+        int[] datasetForShellSort = new int[datasetSize];
+        Random random = new Random();
+        for (int i = 0; i < datasetSize; i++) {
+            int num = random.nextInt(20000) - 10000; // Range -10000 to 10000
+            datasetForRadixSort[i] = num;
+            datasetForShellSort[i] = num;
+        }
+
+        // Apply Radix Sort
+        System.out.println("Radix Sort:");
+        long startTime = System.nanoTime();
+        radixSort(datasetForRadixSort);
+        long endTime = System.nanoTime();
+        System.out.println("Execution time: " + (endTime - startTime) + " ns");
+        System.out.println("First 10 elements after Radix Sort:");
+        for (int i = 0; i < 10 && i < datasetSize; i++) {
+            System.out.print(datasetForRadixSort[i] + " ");
+        }
+        System.out.println("\n");
+
+        // Apply Shell Sort
+        System.out.println("Shell Sort:");
+        startTime = System.nanoTime();
+        shellSort(datasetForShellSort);
+        endTime = System.nanoTime();
+        System.out.println("Execution time: " + (endTime - startTime) + " ns");
+        System.out.println("First 10 elements after Shell Sort:");
+        for (int i = 0; i < 10 && i < datasetSize; i++) {
+            System.out.print(datasetForShellSort[i] + " ");
+        }
+        System.out.println("\n");
+
+        scanner.close();
+    }
+
+    public static void main(String[] args) {
+        algorithms();
+    }
 }
-
-//the code below is for manager menu!!!!!!!!!!!!!!
-
-case "algorithms":
-    System.out.println("Enter the dataset size (1000 - 10000):");
-    int size = scanner.nextInt();
-    if (size < 1000 || size > 10000) {
-        System.out.println("Invalid size!");
-        break;
-    }
-
-    int[] dataset = new int[size];
-    for (int i = 0; i < size; i++) {
-        dataset[i] = (int) (Math.random() * 20001) - 10000;
-    }
-
-    System.out.println("Radix Sort is working...");
-    long start = System.nanoTime();
-    SortingAlgorithms.radixSort(dataset.clone());
-    long radixTime = System.nanoTime() - start;
-
-    System.out.println("Shell Sort is working...");
-    start = System.nanoTime();
-    SortingAlgorithms.shellSort(dataset.clone());
-    long shellTime = System.nanoTime() - start;
-
-    System.out.println("Sorting times:");
-    System.out.println("Radix Sort: " + radixTime);
-    System.out.println("Shell Sort: " + shellTime);
-    break;
