@@ -41,6 +41,7 @@ public abstract class RegularEmployee extends User{
                 System.out.println("\n" + this);
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
+                clearScreen();
                 break;
             case "update username":
                 System.out.println("Enter new username:");

@@ -44,6 +44,7 @@ public class Manager extends User {
                 System.out.println("\n" + this);
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
+                clearScreen();
                 break;
             case "employees":
                 Repository repo = new Repository();
@@ -51,6 +52,7 @@ public class Manager extends User {
                     System.out.println(u + "\n");
                 System.out.println("Press enter to continue...");
                 scanner.nextLine();
+                clearScreen();
                 break;
             case "algorithms":
                 new Algorithm();
