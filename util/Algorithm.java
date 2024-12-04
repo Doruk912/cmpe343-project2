@@ -41,16 +41,16 @@ public class Algorithm {
         verifySortingAlgorithms(dataset);
 
         System.out.println("Radix Sort is working...");
-        long radixTime = timeKeeper(dataset, "Radix", runs);
+        double radixTime = timeKeeper(dataset, "Radix", runs);
 
         System.out.println("Shell Sort is working...");
-        long shellTime = timeKeeper(dataset, "Shell", runs);
+        double shellTime = timeKeeper(dataset, "Shell", runs);
 
         System.out.println("Heap Sort is working...");
-        long heapTime = timeKeeper(dataset, "Heap", runs);
+        double heapTime = timeKeeper(dataset, "Heap", runs);
 
         System.out.println("Insertion Sort is working...");
-        long insertionTime = timeKeeper(dataset, "Insertion", runs);
+        double insertionTime = timeKeeper(dataset, "Insertion", runs);
 
         System.out.println("Sorting times:");
         System.out.printf("%-15s: %.3f ms%n", "Radix Sort", radixTime);
@@ -170,7 +170,7 @@ public class Algorithm {
      * @param runs The number of runs that the chosen algorithm is going to be tested.
      * @return Returns the average run time of the chosen algorithm in milliseconds.
      */
-    private long timeKeeper(int[] dataset, String algorithm, int runs) {
+    private double timeKeeper(int[] dataset, String algorithm, int runs) {
         long totalTime = 0;
         for (int i = 0; i < runs; i++) {
             int[] dataCopy = dataset.clone();
@@ -194,7 +194,7 @@ public class Algorithm {
             long endTime = System.nanoTime() - startTime;
             totalTime += endTime;
         }
-        return (totalTime/runs)/1000000;
+        return (totalTime/(double)runs)/1_000_000.0;
     }
     /**
      * Implements the Radix Sort algorithm for sorting integers.
