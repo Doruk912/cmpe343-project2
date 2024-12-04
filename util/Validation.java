@@ -24,4 +24,14 @@ public class Validation {
             strength++;
         return strength;
     }
+
+    public boolean isValidUsername(String username) {
+        String regex = "^[a-z]{5,20}$";
+        return username.matches(regex);
+    }
+
+    public boolean isValidName(String name){
+        String regex = "^[a-zA-Z]{1,25}$";
+        return name.matches(regex);
+    }
 }

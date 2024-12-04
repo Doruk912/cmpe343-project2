@@ -31,11 +31,12 @@ public class Manager extends User {
             System.out.println("Some useful commands:");
             System.out.println("[1] Display Profile");
             System.out.println("[2] Display Detailed Profile");
-            System.out.println("[3] List All Employees");
-            System.out.println("[4] Hire Employee");
-            System.out.println("[5] Fire Employee");
-            System.out.println("[6] Compare Sorting Algorithms");
-            System.out.println("[7] Logout");
+            System.out.println("[3] Update Profile");
+            System.out.println("[4] List All Employees");
+            System.out.println("[5] Hire Employee");
+            System.out.println("[6] Fire Employee");
+            System.out.println("[7] Compare Sorting Algorithms");
+            System.out.println("[8] Logout");
             System.out.println();
 
             System.out.print("Enter command: ");
@@ -55,21 +56,24 @@ public class Manager extends User {
                     clearScreen();
                     break;
                 case "3":
-                    displayAllEmployees();
+                    while (updateMenu());
                     break;
                 case "4":
-                    hireEmployee();
+                    displayAllEmployees();
                     break;
                 case "5":
-                    fireEmployee();
+                    hireEmployee();
                     break;
                 case "6":
+                    fireEmployee();
+                    break;
+                case "7":
                     new Algorithm();
                     System.out.println("\nPress enter to continue...");
                     scanner.nextLine();
                     clearScreen();
                     break;
-                case "7":
+                case "8":
                     System.out.println("Logged out.");
                     return false;
                 default:
@@ -78,6 +82,103 @@ public class Manager extends User {
                     break;
             }
         }
+    }
+
+    private boolean updateMenu() {
+        System.out.println("Update Profile");
+        System.out.println("Choose what to update:");
+        System.out.println("[1] Username");
+        System.out.println("[2] Password");
+        System.out.println("[3] Phone Number");
+        System.out.println("[4] Email");
+        System.out.println("[5] First Name");
+        System.out.println("[6] Last Name");
+        System.out.println("[7] Exit");
+
+        System.out.print("Enter your choice: ");
+        String choice = scanner.nextLine().trim();
+
+        switch (choice) {
+            case "1":
+                System.out.println("Enter new username:");
+                String newUsername = scanner.nextLine().trim();
+                while (!validation.isValidUsername(newUsername)) {
+                    System.out.println("Invalid username. Please try again. No numbers, symbols, capital or turkish letters allowed. Min 5, max 20 characters.");
+                    newUsername = scanner.nextLine().trim();
+                }
+                this.setUsername(newUsername);
+                System.out.println("Username updated.");
+                System.out.println("\nPress enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+                break;
+            case "2":
+                if (!updatePassword()) {
+                    System.out.println("Password update cancelled.");
+                }
+                break;
+            case "3":
+                System.out.println("Enter the new phone number (e.g., +1 1234567890):");
+                String newPhoneNo = scanner.nextLine().trim();
+                while (!validation.isValidPhoneNumber(newPhoneNo)) {
+                    System.out.println("Invalid phone number. Please use the format '+<country code> <10-digit number>'.");
+                    System.out.println("Example: +1 1234567890");
+                    newPhoneNo = scanner.nextLine().trim();
+                }
+                this.setPhoneNo(newPhoneNo);
+                System.out.println("Phone number updated.");
+                System.out.println("\nPress enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+                break;
+            case "4":
+                System.out.println("Enter new email:");
+                String newEmail = scanner.nextLine().trim();
+                while (!validation.isValidEmail(newEmail)) {
+                    System.out.println("Invalid email. Please try again.");
+                    newEmail = scanner.nextLine().trim();
+                }
+                this.setEmail(newEmail);
+                System.out.println("Email updated.");
+                System.out.println("\nPress enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+                break;
+            case "5":
+                System.out.println("Enter new first name:");
+                String newFirstName = scanner.nextLine().trim();
+                while (!validation.isValidName(newFirstName)) {
+                    System.out.println("Invalid name. Please try again.");
+                    newFirstName = scanner.nextLine().trim();
+                }
+                this.setFirstName(newFirstName);
+                System.out.println("First name updated.");
+                System.out.println("\nPress enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+                break;
+            case "6":
+                System.out.println("Enter new last name:");
+                String newLastName = scanner.nextLine().trim();
+                while (!validation.isValidName(newLastName)) {
+                    System.out.println("Invalid name. Please try again.");
+                    newLastName = scanner.nextLine().trim();
+                }
+                this.setLastName(newLastName);
+                System.out.println("Last name updated.");
+                System.out.println("\nPress enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+                break;
+            case "7":
+                System.out.println("Exiting update menu.");
+                return false;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+
+        }
+        return true;
     }
 
     private void displayAllEmployees() {
