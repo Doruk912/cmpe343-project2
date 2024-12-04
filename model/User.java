@@ -228,6 +228,7 @@ public abstract class User {
     @Override
     public String toString() {
         String result = "Full name: " + this.getFirstName() + " " +  this.getLastName() + "\n";
+        result += "Username: " + this.getUsername() + "\n";
         result += "Email: " + this.getEmail() + "\n";
         result += "Phone no: " + this.getPhoneNo() + "\n";
         result += "User id: " + this.getUserId() + "\n";
