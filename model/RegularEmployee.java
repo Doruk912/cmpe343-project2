@@ -5,15 +5,49 @@ import util.Validation;
 import java.sql.Date;
 import java.util.Scanner;
 
+/**
+ * Represents a {@link RegularEmployee}, a subclass of {@link User}.
+ * <p>The {@code RegularEmployee} class provides functionalities for managing the profile of regular employees,
+ * such as displaying, updating, and modifying employee details like password, phone number, and email.</p>
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Handles commands for displaying and updating employee profiles.</li>
+ *     <li>Supports password, phone number, and email updates with validation checks.</li>
+ *     <li>Ensures that employees do not use the default password ("password").</li>
+ *     <li>Supports basic profile details and detailed profile views.</li>
+ *     <li>Provides an option to logout from the menu.</li>
+ * </ul>
+ */
 public abstract class RegularEmployee extends User{
 
     Scanner scanner = new Scanner(System.in);
     Validation validation = new Validation();
 
+    /**
+     * Constructs a {@code RegularEmployee} instance with the provided details.
+     *
+     * @param userId      The unique identifier for the regular employee.
+     * @param username    The username of the regular employee.
+     * @param password    The password of the regular employee.
+     * @param role        The role of the user, expected to be {@code "REGULAR_EMPLOYEE"}.
+     * @param firstName   The first name of the regular employee.
+     * @param lastName    The last name of the regular employee.
+     * @param phoneNo     The phone number of the regular employee.
+     * @param email       The email address of the regular employee.
+     * @param dateOfBirth The date of birth of the regular employee.
+     * @param dateOfStart The date when the regular employee started employment.
+     */
     public RegularEmployee(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
     }
 
+    /**
+     * Displays the employee's menu and handles commands entered by the regular employee.
+     * <p>This method allows the regular employee to execute various commands, such as displaying profile, updating profile, or logging out.</p>
+     *
+     * @return {@code true} if the employee remains logged in, {@code false} if the employee logs out.
+     */
     public boolean menu() {
         System.out.println("[EMPLOYEE MENU]");
         System.out.println("Logged in as " + this.getUsername() + "\n");
@@ -73,6 +107,12 @@ public abstract class RegularEmployee extends User{
         return true;
     }
 
+    /**
+     * Returns a detailed profile of the regular employee.
+     * <p>This method returns a string representation of the employee's details, including personal and professional information.</p>
+     *
+     * @return A string containing the detailed profile of the regular employee.
+     */
     private String detailedProfile() {
         return "User ID: " + this.getUserId() + "\n" +
                "Username: " + this.getUsername() + "\n" +
@@ -85,6 +125,12 @@ public abstract class RegularEmployee extends User{
                "Date of Start: " + this.getDateOfStart() + "\n";
     }
 
+    /**
+     * Displays the update menu and handles commands for updating profile details such as password, phone number, and email.
+     * <p>This method provides validation for the updated values and ensures they meet the necessary criteria before updating.</p>
+     *
+     * @return {@code true} if the menu continues after an update, {@code false} if the employee chooses to exit the update menu.
+     */
     private boolean updateMenu() {
         System.out.println("Update Profile");
         System.out.println("Choose what to update:");
