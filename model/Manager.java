@@ -6,16 +6,63 @@ import util.Validation;
 import java.sql.Date;
 import java.util.Scanner;
 
+/**
+ * The Manager class represents a Manager user in the system. It extends from the User class and
+ * provides methods to interact with the system for managing employee profiles, updating information,
+ * hiring and firing employees, and more.
+ * The manager has a role-based menu with different functionalities for managing the system.
+ *
+ * <p>Some of the key functionalities include:</p>
+ * <ul>
+ *   <li>Displaying and updating the manager's profile</li>
+ *   <li>Managing employee records (list, update, hire, fire)</li>
+ *   <li>Comparing sorting algorithms</li>
+ * </ul>
+ *
+ * <p>The Manager class also ensures that the user's password is updated if it is still set to the default value.</p>
+ *
+ * @see User
+ * @see Algorithm
+ * @see Repository
+ * @see Validation
+ */
 public class Manager extends User {
 
     Scanner scanner = new Scanner(System.in);
     Validation validation = new Validation();
     Repository repository = new Repository();
 
+    /**
+     * Constructs a new Manager object with the specified user details.
+     *
+     * @param userId the user's unique identifier
+     * @param username the username of the user
+     * @param password the user's password
+     * @param role the role of the user (should be "MANAGER")
+     * @param firstName the user's first name
+     * @param lastName the user's last name
+     * @param phoneNo the user's phone number
+     * @param email the user's email address
+     * @param dateOfBirth the user's date of birth
+     * @param dateOfStart the user's date of start with the company
+     */
     public Manager(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
     }
 
+    /**
+     * Displays the manager's menu with available options and handles user input for different actions.
+     * <p>This method allows the manager to:</p>
+     * <ul>
+     *   <li>Update their password</li>
+     *   <li>Display and update their profile</li>
+     *   <li>Manage employee information (e.g., hire, fire, update, view)</li>
+     *   <li>Compare sorting algorithms</li>
+     *   <li>Logout</li>
+     * </ul>
+     *
+     * @return {@code true} if the manager successfully logs out, {@code false} if the manager's session is terminated
+     */
     public boolean menu() {
         System.out.println("[MANAGER MENU]");
         System.out.println("Logged in as " + this.getUsername());
@@ -93,6 +140,11 @@ public class Manager extends User {
         }
     }
 
+    /**
+     * Displays the update profile menu and handles updating specific user information.
+     *
+     * @return {@code true} if the user continues to update their profile, {@code false} if they exit the update menu
+     */
     private boolean updateMenu() {
         System.out.println("Update Profile");
         System.out.println("Choose what to update:");
@@ -190,6 +242,10 @@ public class Manager extends User {
         return true;
     }
 
+    /**
+     * Displays a list of all employees in the system.
+     * This method fetches all users from the repository and prints them to the console.
+     */
     private void displayAllEmployees() {
         Repository repo = new Repository();
         System.out.println("All Employees:");
@@ -201,6 +257,10 @@ public class Manager extends User {
         clearScreen();
     }
 
+    /**
+     * Hires a new employee by collecting relevant information (e.g., username, role, phone number) and adding them to the system.
+     * Validates the provided information, checks for existing users, and ensures that the start date is after the birth date.
+     */
     private void hireEmployee() {
         System.out.println("Hire Employee");
         System.out.print("Enter username: ");
@@ -282,6 +342,10 @@ public class Manager extends User {
         clearScreen();
     }
 
+    /**
+     * Updates the details of an existing employee. This method allows the manager to change the username, role, first name,
+     * last name, phone number, email, and date of birth of an employee.
+     */
     private void updateEmployee(){
         System.out.println("Update Employee");
         System.out.println("Enter the username or the user ID of the employee you want to update: ");
@@ -422,6 +486,10 @@ public class Manager extends User {
         }
     }
 
+    /**
+     * Fires an employee by removing them from the system. The manager must provide the employee's ID to proceed.
+     * If the employee cannot be found, an error message is shown.
+     */
     private void fireEmployee() {
         System.out.println("Fire Employee");
         while (true) {
@@ -454,6 +522,21 @@ public class Manager extends User {
         clearScreen();
     }
 
+    /**
+     * This method prompts the user to enter a new password, checks its strength, and updates the password
+     * if it meets the required conditions. The password must not be 'password', and if the password is weak,
+     * the user will be asked for confirmation before updating.
+     *
+     * @return boolean - Returns true if the password was updated successfully, false if the update was canceled.
+     *
+     * The method works as follows:
+     * 1. Prompts the user to enter a new password.
+     * 2. Validates the password to ensure it is not "password".
+     * 3. If the password is weak (determined by a password strength validation method), asks the user for confirmation to proceed.
+     * 4. If the user confirms, the password is updated and a success message is displayed.
+     * 5. If the user cancels, the password is not updated, and a message is shown.
+     * 6. After updating (or not updating) the password, the method clears the screen and returns to the menu.
+     */
     private boolean updatePassword() {
         System.out.println("Enter new password:");
         String input = scanner.nextLine().trim();
@@ -485,6 +568,21 @@ public class Manager extends User {
         return true;
     }
 
+    /**
+     * This method allows the user to search for an employee's profile using either their username or user ID.
+     * It prompts the user to input either a username or an ID and displays the detailed profile of the corresponding employee.
+     *
+     * @return void
+     *
+     * The method works as follows:
+     * 1. Prompts the user to enter a username or user ID.
+     * 2. Checks if the input is a numeric ID or a valid username (between 3 and 20 lowercase letters).
+     * 3. If the input is a valid ID, the method retrieves the user by ID from the repository and displays their profile.
+     * 4. If the input is a valid username, the method retrieves the user by username from the repository and displays their profile.
+     * 5. If the user is not found, an appropriate message is displayed.
+     * 6. If the input is invalid (neither an ID nor a valid username), an error message is shown.
+     * 7. After displaying the profile, the method waits for the user to press enter and clears the screen.
+     */
     public void displayEmployee() {
         System.out.println("Enter username or used ID of the employee you want to display: ");
         String input = scanner.nextLine().trim();
