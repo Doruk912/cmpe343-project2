@@ -6,12 +6,46 @@ import util.Repository;
 import java.sql.Date;
 import java.util.Scanner;
 
+/**
+ * Represents a {@link Manager}, a subclass of {@link User}.
+ * <p>The {@code Manager} class provides functionalities for managing employees,
+ * including the ability to hire, fire, and view employee details. The class also allows
+ * the manager to compare sorting algorithms.</p>
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Handles manager-specific commands such as displaying profile, viewing employees, hiring, and firing employees.</li>
+ *     <li>Requires a password change if the default password is used.</li>
+ *     <li>Supports the functionality to compare sorting algorithms.</li>
+ * </ul>
+ */
 public class Manager extends User {
 
+    /**
+     * Constructs a {@code Manager} instance with the provided details.
+     *
+     * @param userId      The unique identifier for the manager.
+     * @param username    The username of the manager.
+     * @param password    The password of the manager.
+     * @param role        The role of the user, expected to be {@code "MANAGER"}.
+     * @param firstName   The first name of the manager.
+     * @param lastName    The last name of the manager.
+     * @param phoneNo     The phone number of the manager.
+     * @param email       The email address of the manager.
+     * @param dateOfBirth The date of birth of the manager.
+     * @param dateOfStart The date when the manager started employment.
+     */
     public Manager(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
     }
 
+    /**
+     * Displays the manager's menu and handles commands entered by the manager.
+     * <p>This method allows the manager to execute various commands, such as displaying profile,
+     * viewing employees, hiring, firing, comparing algorithms, or logging out.</p>
+     *
+     * @return {@code true} if the manager remains logged in, {@code false} if the manager logs out.
+     */
     public boolean menu() {
         System.out.println("[" + this.getRole() + " MENU]");
         System.out.println("Logged in as " + this.getUsername());
