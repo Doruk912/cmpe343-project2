@@ -170,7 +170,7 @@ public class Repository {
             ArrayList<User> users = new ArrayList<User>();
 
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT user_id FROM users");
+            ResultSet resultSet = statement.executeQuery("SELECT user_id FROM users ORDER BY first_name");
             while (resultSet.next()) {
                 users.add(this.getUserById(resultSet.getInt(1)));
             }

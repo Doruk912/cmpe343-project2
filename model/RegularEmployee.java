@@ -1,7 +1,6 @@
 package model;
 
 import util.Validation;
-
 import java.sql.Date;
 import java.util.Scanner;
 
@@ -17,60 +16,51 @@ public abstract class RegularEmployee extends User{
     public boolean menu() {
         System.out.println("[EMPLOYEE MENU]");
         System.out.println("Logged in as " + this.getUsername() + "\n");
-        String input;
 
-        if (this.getPassword().equals("password")) {
-            System.out.println("You need to enter another password:");
-            input = scanner.nextLine().trim();
-            while (input.equals("password")) {
-                System.out.println("Password cannot be 'password' try again:");
-                input = scanner.nextLine().trim();
-            }
-            this.setPassword(input);
-        }
-
-        System.out.println("Some useful commands:");
-        System.out.println("[1] Display Profile");
-        System.out.println("[2] Display Detailed Profile");
-        System.out.println("[3] Update Profile");
-        System.out.println("[4] Logout");
-        System.out.println();
-
-        System.out.println("Enter command: ");
-        input = scanner.nextLine().trim().toLowerCase();
-
-        switch (input) {
-            case "1":
-            case "display":
-                System.out.println("\n" + this);
-                System.out.println("Press enter to continue...");
-                scanner.nextLine();
-                clearScreen();
-                break;
-            case "2":
-            case "detailed":
-                System.out.println("\n" + this.detailedProfile());
-                System.out.println("Press enter to continue...");
-                scanner.nextLine();
-                clearScreen();
-                break;
-            case "3":
-            case "update":
-                boolean flag = true;
-                while(flag){
-                    flag = updateMenu();
-                }
-                break;
-            case "4":
-            case "logout":
-                System.out.println("Logged out.");
+        while (this.getPassword().equals("password")) {
+            System.out.println("You need to set a new password.");
+            if (!updatePassword()) {
+                System.out.println("Password change is mandatory. Returning to the login screen.");
                 return false;
-            default:
-                clearScreen();
-                System.out.println("Invalid command.");
-                break;
+            }
         }
-        return true;
+
+        while (true) {
+            System.out.println("Some useful commands:");
+            System.out.println("[1] Display Profile");
+            System.out.println("[2] Display Detailed Profile");
+            System.out.println("[3] Update Profile");
+            System.out.println("[4] Logout");
+            System.out.println();
+
+            System.out.print("Enter command: ");
+            String input = scanner.nextLine().trim();
+
+            switch (input) {
+                case "1":
+                    System.out.println("\n" + this);
+                    System.out.println("Press enter to continue...");
+                    scanner.nextLine();
+                    clearScreen();
+                    break;
+                case "2":
+                    System.out.println("\n" + detailedProfile());
+                    System.out.println("Press enter to continue...");
+                    scanner.nextLine();
+                    clearScreen();
+                    break;
+                case "3":
+                    while (updateMenu());
+                    break;
+                case "4":
+                    System.out.println("Logged out.");
+                    return false;
+                default:
+                    System.out.println("Invalid command.");
+                    clearScreen();
+                    break;
+            }
+        }
     }
 
     private String detailedProfile() {
@@ -197,5 +187,36 @@ public abstract class RegularEmployee extends User{
                 break;
         }
         return false;
+    }
+
+    private boolean updatePassword() {
+        System.out.println("Enter new password:");
+        String input = scanner.nextLine().trim();
+
+        while (input.equals("password")) {
+            System.out.println("Password cannot be 'password'. Try again:");
+            input = scanner.nextLine().trim();
+        }
+
+        int passwordStrength = validation.getPasswordStrength(input);
+
+        if (passwordStrength <= 1) {
+            System.out.println("Password is " + (passwordStrength == 0 ? "very weak" : "weak") + ". Are you sure you want to use this password?");
+            System.out.println("[1] Yes");
+            System.out.println("[2] No");
+
+            String choice = scanner.nextLine().trim();
+            if (!choice.equals("1")) {
+                System.out.println("Password not updated. Returning to the menu.");
+                return false;
+            }
+        }
+
+        this.setPassword(input);
+        System.out.println("Password updated successfully.");
+        System.out.println("\nPress enter to continue...");
+        scanner.nextLine();
+        clearScreen();
+        return true;
     }
 }
