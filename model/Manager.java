@@ -57,8 +57,15 @@ public class Manager extends User {
                 clearScreen();
                 break;
             case "hire":
+                Repository repo_h = new Repository();
                 System.out.println("Username");
-                String username = scanner.nextLine();
+                String username = scanner.nextLine().trim().toLowerCase();
+
+                if (repo_h.getUserByUsername(username) != null) {
+                    System.out.println("Username already exists");
+                    break;
+                }
+                
                 System.out.println("Choose role:");
                 System.out.println("[1] MANAGER");
                 System.out.println("[2] ENGINEER");
@@ -87,7 +94,6 @@ public class Manager extends User {
                 System.out.println("Last name:");
                 String last = scanner.nextLine();
 
-                Repository repo_h = new Repository();
                 repo_h.addUser(username, role, first, last);
                 break;
             case "fire":

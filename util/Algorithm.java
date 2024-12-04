@@ -9,8 +9,19 @@ import java.util.Scanner;
 import static util.Application.clearScreen;
 
 /**
- * Algorithm class is created to benchmark the various sorting algorithms
- * while checking their correctness utilizing the default java sorting algorithm.
+ * The {@code Algorithm} class benchmarks various sorting algorithms, verifies their correctness using Java's default sorting algorithm,
+ * and measures their performance by timing multiple runs.
+ * <p>
+ * This class supports the following sorting algorithms:
+ * <ul>
+ *     <li>Radix Sort</li>
+ *     <li>Shell Sort</li>
+ *     <li>Heap Sort</li>
+ *     <li>Insertion Sort</li>
+ * </ul>
+ * It generates a random dataset, validates the sorting algorithms, and times their performance over multiple runs.
+ * </p>
+ * @author Imran D.
  */
 public class Algorithm {
 
