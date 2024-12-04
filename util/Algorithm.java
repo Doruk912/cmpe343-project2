@@ -220,13 +220,20 @@ public class Algorithm {
         return (totalTime/(double)runs)/1_000_000.0;
     }
 
+    /**
+     *
+     * @param filename
+     * @param sortedValues
+     * @param algorithmName
+     */
 
     private void saveToFile(String filename, int[] sortedValues, String algorithmName) {
-        try (FileWriter writer = new FileWriter(filename)) {
+        try (FileWriter writer = new FileWriter(filename,true)) {
             writer.write("Sorted values for " + algorithmName + ":\n");
             for (int value : sortedValues) {
                 writer.write(value + System.lineSeparator());
             }
+            writer.write(System.lineSeparator());
             System.out.println("Sorted values for " + algorithmName + " saved to " + filename);
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
