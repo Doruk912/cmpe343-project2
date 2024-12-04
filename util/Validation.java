@@ -12,10 +12,16 @@ public class Validation {
         return email.matches(regex);
     }
 
-    /*
     public int getPasswordStrength(String password) {
         int strength = 0;
-
+        if (password.length() >= 8)
+            strength++;
+        if (password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))
+            strength++;
+        if (password.matches(".*\\d.*"))
+            strength++;
+        if (password.matches(".*[!@#$%^&*(),.?\":{}|<>].*"))
+            strength++;
+        return strength;
     }
-*/
 }

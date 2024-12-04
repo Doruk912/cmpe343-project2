@@ -101,6 +101,60 @@ public abstract class RegularEmployee extends User{
             case "1":
                 System.out.println("Enter new password:");
                 input = scanner.nextLine().trim();
+                while (input.equals("password")) {
+                    System.out.println("Password cannot be 'password' try again:");
+                    input = scanner.nextLine().trim();
+                }
+                int passwordStrength = validation.getPasswordStrength(input);
+                switch (passwordStrength) {
+                    case 0:
+                        System.out.println("Password is very weak. Are you sure you want to use this password?");
+                        System.out.println("[1] Yes");
+                        System.out.println("[2] No");
+                        String choice = scanner.nextLine().trim();
+                        if(choice.equals("1")){
+                            break;
+                        }
+                        if (choice.equals("2")) {
+                            System.out.println("Password not updated.");
+                            System.out.println("\nPress enter to continue...");
+                            scanner.nextLine();
+                            clearScreen();
+                            return false;
+                        }
+                        else {
+                            System.out.println("Invalid command. Password not updated. Returning to the menu.");
+                            return false;
+                        }
+                    case 1:
+                        System.out.println("Password is weak. Are you sure you want to use this password?");
+                        System.out.println("[1] Yes");
+                        System.out.println("[2] No");
+                        choice = scanner.nextLine().trim();
+                        if(choice.equals("1")){
+                            break;
+                        }
+                        if (choice.equals("2")) {
+                            System.out.println("Password not updated.");
+                            System.out.println("\nPress enter to continue...");
+                            scanner.nextLine();
+                            clearScreen();
+                            return false;
+                        }
+                        else {
+                            System.out.println("Invalid command. Password not updated. Returning to the menu.");
+                            return false;
+                        }
+                    case 2:
+                        System.out.println("Password strength is medium.\n");
+                        break;
+                    case 3:
+                        System.out.println("Password is strong.\n");
+                        break;
+                    case 4:
+                        System.out.println("Password is very strong.\n");
+                        break;
+                }
                 this.setPassword(input);
                 System.out.println("Password updated.");
                 System.out.println("\nPress enter to continue...");
