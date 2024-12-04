@@ -62,7 +62,7 @@ public abstract class RegularEmployee extends User{
             }
         }
     }
-
+/*
     private String detailedProfile() {
         return "User ID: " + this.getUserId() + "\n" +
                "Username: " + this.getUsername() + "\n" +
@@ -73,7 +73,7 @@ public abstract class RegularEmployee extends User{
                "Email: " + this.getEmail() + "\n" +
                "Date of Birth: " + this.getDateOfBirth() + "\n" +
                "Date of Start: " + this.getDateOfStart() + "\n";
-    }
+    }*/
 
     private boolean updateMenu() {
         System.out.println("Update Profile");

@@ -10,6 +10,7 @@ public class Manager extends User {
 
     Scanner scanner = new Scanner(System.in);
     Validation validation = new Validation();
+    Repository repository = new Repository();
 
     public Manager(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
@@ -33,10 +34,11 @@ public class Manager extends User {
             System.out.println("[2] Display Detailed Profile");
             System.out.println("[3] Update Profile");
             System.out.println("[4] List All Employees");
-            System.out.println("[5] Hire Employee");
-            System.out.println("[6] Fire Employee");
-            System.out.println("[7] Compare Sorting Algorithms");
-            System.out.println("[8] Logout");
+            System.out.println("[5] Display Details of an Employee");
+            System.out.println("[6] Hire Employee");
+            System.out.println("[7] Fire Employee");
+            System.out.println("[8] Compare Sorting Algorithms");
+            System.out.println("[9] Logout");
             System.out.println();
 
             System.out.print("Enter command: ");
@@ -62,18 +64,21 @@ public class Manager extends User {
                     displayAllEmployees();
                     break;
                 case "5":
-                    hireEmployee();
+                    displayEmployee();
                     break;
                 case "6":
-                    fireEmployee();
+                    hireEmployee();
                     break;
                 case "7":
+                    fireEmployee();
+                    break;
+                case "8":
                     new Algorithm();
                     System.out.println("\nPress enter to continue...");
                     scanner.nextLine();
                     clearScreen();
                     break;
-                case "8":
+                case "9":
                     System.out.println("Logged out.");
                     return false;
                 default:
@@ -301,6 +306,35 @@ public class Manager extends User {
         return true;
     }
 
+    public void displayEmployee() {
+        System.out.println("Enter username or used ID of the employee you want to display: ");
+        String input = scanner.nextLine().trim();
+        if(input.matches("\\d+")){
+            int userId = Integer.parseInt(input);
+            User user = repository.getUserById(userId);
+            if(user != null){
+                System.out.println(user.detailedProfile());
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+            }else {
+                System.out.println("User not found.");
+            }
+        }else if(input.matches("[a-z]{3,20}")){
+            User user = repository.getUserByUsername(input);
+            if(user != null){
+                System.out.println(user.detailedProfile());
+                System.out.println("Press enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+            }else {
+                System.out.println("User not found.");
+            }
+        }else {
+            System.out.println("Invalid input.");
+        }
+    }
+/*
     private String detailedProfile() {
         return "User ID: " + this.getUserId() + "\n" +
                 "Username: " + this.getUsername() + "\n" +
@@ -311,6 +345,6 @@ public class Manager extends User {
                 "Email: " + this.getEmail() + "\n" +
                 "Date of Birth: " + this.getDateOfBirth() + "\n" +
                 "Date of Start: " + this.getDateOfStart() + "\n";
-    }
+    }*/
 }
 
