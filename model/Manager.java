@@ -35,10 +35,11 @@ public class Manager extends User {
             System.out.println("[3] Update Profile");
             System.out.println("[4] List All Employees");
             System.out.println("[5] Display Details of an Employee");
-            System.out.println("[6] Hire Employee");
-            System.out.println("[7] Fire Employee");
-            System.out.println("[8] Compare Sorting Algorithms");
-            System.out.println("[9] Logout");
+            System.out.println("[6] Update Employee");
+            System.out.println("[7] Hire Employee");
+            System.out.println("[8] Fire Employee");
+            System.out.println("[9] Compare Sorting Algorithms");
+            System.out.println("[10] Logout");
             System.out.println();
 
             System.out.print("Enter command: ");
@@ -67,18 +68,21 @@ public class Manager extends User {
                     displayEmployee();
                     break;
                 case "6":
-                    hireEmployee();
+                    updateEmployee();
                     break;
                 case "7":
-                    fireEmployee();
+                    hireEmployee();
                     break;
                 case "8":
+                    fireEmployee();
+                    break;
+                case "9":
                     new Algorithm();
                     System.out.println("\nPress enter to continue...");
                     scanner.nextLine();
                     clearScreen();
                     break;
-                case "9":
+                case "10":
                     System.out.println("Logged out.");
                     return false;
                 default:
@@ -278,8 +282,147 @@ public class Manager extends User {
         clearScreen();
     }
 
+    private void updateEmployee(){
+        System.out.println("Update Employee");
+        System.out.println("Enter the username or the user ID of the employee you want to update: ");
+        String input = scanner.nextLine().trim();
+        User userToUpdate = null;
+
+        if (input.matches("\\d+")) {
+            int userId = Integer.parseInt(input);
+            userToUpdate = repository.getUserById(userId);
+        } else if(input.matches("[a-z]{3,20}")){
+            userToUpdate = repository.getUserByUsername(input);
+        }else {
+            System.out.println("Invalid input.");
+            return;
+        }
+
+        if (userToUpdate == null) {
+            System.out.println("Employee not found.");
+            System.out.println("\nPress enter to continue...");
+            scanner.nextLine();
+            clearScreen();
+            return;
+        }
+
+        System.out.println("Current details:");
+        System.out.println(userToUpdate.detailedProfile());
+
+        while (true) {
+            System.out.println("\nWhat would you like to update?");
+            System.out.println("[1] Username");
+            System.out.println("[2] Role");
+            System.out.println("[3] First Name");
+            System.out.println("[4] Last Name");
+            System.out.println("[5] Phone Number");
+            System.out.println("[6] Email");
+            System.out.println("[7] Date of Birth");
+            System.out.println("[8] Exit");
+
+            System.out.print("Enter your choice: ");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    System.out.println("Enter new username:");
+                    String newUsername = scanner.nextLine().trim();
+                    while (!validation.isValidUsername(newUsername)) {
+                        System.out.println("Invalid username. Please try again.");
+                        newUsername = scanner.nextLine().trim();
+                    }
+                    userToUpdate.setUsername(newUsername);
+                    System.out.println("Username updated.");
+                    break;
+
+                case "2":
+                    System.out.println("Choose new role:");
+                    System.out.println("[1] MANAGER");
+                    System.out.println("[2] ENGINEER");
+                    System.out.println("[3] TECHNICIAN");
+                    System.out.println("[4] INTERN");
+                    String role = scanner.nextLine().trim();
+                    role = switch (role) {
+                        case "1" -> "MANAGER";
+                        case "2" -> "ENGINEER";
+                        case "3" -> "TECHNICIAN";
+                        case "4" -> "INTERN";
+                        default -> {
+                            System.out.println("Invalid role. Defaulting to INTERN.");
+                            yield "INTERN";
+                        }
+                    };
+                    userToUpdate.setRole(role);
+                    System.out.println("Role updated.");
+                    break;
+
+                case "3":
+                    System.out.println("Enter new first name:");
+                    String newFirstName = scanner.nextLine().trim();
+                    while (!validation.isValidName(newFirstName)) {
+                        System.out.println("Invalid name. Please try again.");
+                        newFirstName = scanner.nextLine().trim();
+                    }
+                    userToUpdate.setFirstName(newFirstName);
+                    System.out.println("First name updated.");
+                    break;
+
+                case "4":
+                    System.out.println("Enter new last name:");
+                    String newLastName = scanner.nextLine().trim();
+                    while (!validation.isValidName(newLastName)) {
+                        System.out.println("Invalid name. Please try again.");
+                        newLastName = scanner.nextLine().trim();
+                    }
+                    userToUpdate.setLastName(newLastName);
+                    System.out.println("Last name updated.");
+                    break;
+
+                case "5":
+                    System.out.println("Enter new phone number (e.g., +1 1234567890):");
+                    String newPhone = scanner.nextLine().trim();
+                    while (!validation.isValidPhoneNumber(newPhone)) {
+                        System.out.println("Invalid phone number. Please try again.");
+                        newPhone = scanner.nextLine().trim();
+                    }
+                    userToUpdate.setPhoneNo(newPhone);
+                    System.out.println("Phone number updated.");
+                    break;
+
+                case "6":
+                    System.out.println("Enter new email:");
+                    String newEmail = scanner.nextLine().trim();
+                    while (!validation.isValidEmail(newEmail)) {
+                        System.out.println("Invalid email. Please try again.");
+                        newEmail = scanner.nextLine().trim();
+                    }
+                    userToUpdate.setEmail(newEmail);
+                    System.out.println("Email updated.");
+                    break;
+
+                case "7":
+                    System.out.println("Enter new date of birth (yyyy-mm-dd):");
+                    Date newDateOfBirth = validation.getDateFromUser("Enter date of birth");
+                    userToUpdate.setDateOfBirth(newDateOfBirth);
+                    System.out.println("Date of birth updated.");
+                    break;
+
+                case "8":
+                    System.out.println("Exiting update menu.");
+                    System.out.println("\nPress enter to continue...");
+                    scanner.nextLine();
+                    clearScreen();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+            System.out.println("Details updated successfully.");
+        }
+    }
+
     private void fireEmployee() {
-        Repository repo = new Repository();
         System.out.println("Fire Employee");
         while (true) {
             System.out.print("Enter user ID to be fired: ");
@@ -294,8 +437,13 @@ public class Manager extends User {
                     System.out.println("You cannot fire yourself.");
                     break;
                 }
-                repo.removeUser(userId);
-                System.out.println("User " + userId + " has been fired (if they existed).");
+                User firedUser = repository.getUserById(Integer.parseInt(input));
+                if (firedUser == null) {
+                    System.out.println("User not found.");
+                    break;
+                }
+                repository.removeUser(userId);
+                System.out.println(firedUser.getFirstName() + " " + firedUser.getLastName() + " has been fired.");
                 break;
             } catch (NumberFormatException ex) {
                 System.out.println("Invalid user ID. Please enter a numeric value.");
