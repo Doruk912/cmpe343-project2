@@ -334,17 +334,5 @@ public class Manager extends User {
             System.out.println("Invalid input.");
         }
     }
-/*
-    private String detailedProfile() {
-        return "User ID: " + this.getUserId() + "\n" +
-                "Username: " + this.getUsername() + "\n" +
-                "Role: " + this.getRole() + "\n" +
-                "First Name: " + this.getFirstName() + "\n" +
-                "Last Name: " + this.getLastName() + "\n" +
-                "Phone Number: " + this.getPhoneNo() + "\n" +
-                "Email: " + this.getEmail() + "\n" +
-                "Date of Birth: " + this.getDateOfBirth() + "\n" +
-                "Date of Start: " + this.getDateOfStart() + "\n";
-    }*/
 }
 
