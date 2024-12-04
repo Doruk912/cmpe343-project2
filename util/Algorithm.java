@@ -41,16 +41,16 @@ public class Algorithm {
         verifySortingAlgorithms(dataset);
 
         System.out.println("Radix Sort is working...");
-        long radixTime = timeKeeper(dataset, "Radix", runs)/1000000;
+        long radixTime = timeKeeper(dataset, "Radix", runs);
 
         System.out.println("Shell Sort is working...");
-        long shellTime = timeKeeper(dataset, "Shell", runs)/1000000;
+        long shellTime = timeKeeper(dataset, "Shell", runs);
 
         System.out.println("Heap Sort is working...");
-        long heapTime = timeKeeper(dataset, "Heap", runs)/1000000;
+        long heapTime = timeKeeper(dataset, "Heap", runs);
 
         System.out.println("Insertion Sort is working...");
-        long insertionTime = timeKeeper(dataset, "Insertion", runs)/1000000;
+        long insertionTime = timeKeeper(dataset, "Insertion", runs);
 
         System.out.println("Sorting times:");
         System.out.printf("%-15s: %.3f ms%n", "Radix Sort", radixTime);
@@ -159,11 +159,16 @@ public class Algorithm {
 
 
     /**
+     *The JVM optimizes it compilation on every run, so it's like warming up an engine. One time runs of the algorithms
+     * won't give us the real benchmarks. The performance of the run times can change depending on the system load at
+     * moment. This is why we run the algorithms multiple times and take the average time of the runs. This is still not
+     * the most optimized measuring of the performance, the real optimized measuring is out of the scope of this project.
      *
-     * @param dataset
-     * @param algorithm
-     * @param runs
-     * @return
+     *
+     * @param dataset The dataset to be sorted.
+     * @param algorithm The name of the sorting algorithm to be tested.
+     * @param runs The number of runs that the chosen algorithm is going to be tested.
+     * @return Returns the average run time of the chosen algorithm in milliseconds.
      */
     private long timeKeeper(int[] dataset, String algorithm, int runs) {
         long totalTime = 0;
@@ -189,11 +194,15 @@ public class Algorithm {
             long endTime = System.nanoTime() - startTime;
             totalTime += endTime;
         }
-        return totalTime;
+        return (totalTime/runs)/1000000;
     }
     /**
+     * Implements the Radix Sort algorithm for sorting integers.
+     * It uses counting sort as a subroutine to sort the array by each digit,
+     * starting from the least significant digit to the most significant digit.
+     * Handles negative numbers by shifting the range of the array temporarily.
      *
-     * @param array
+     * @param array the array of integers to be sorted.
      */
     public static void radixSort(int[] array) {
         int max = findMax(array);
@@ -216,9 +225,10 @@ public class Algorithm {
     }
 
     /**
+     * Finds the maximum value in an integer array.
      *
-     * @param array
-     * @return
+     * @param array the array of integers.
+     * @return the maximum value in the array.
      */
     private static int findMax(int[] array) {
         int max = array[0];
@@ -231,9 +241,10 @@ public class Algorithm {
     }
 
     /**
+     * Finds the minimum value in an integer array.
      *
-     * @param array
-     * @return
+     * @param array the array of integers.
+     * @return the minimum value in the array.
      */
     private static int findMin(int[] array) {
         int min = array[0];
@@ -246,9 +257,10 @@ public class Algorithm {
     }
 
     /**
+     * Performs counting sort on the array based on the digit at a specific place value.
      *
-     * @param array
-     * @param exp
+     * @param array the array of integers to be sorted.
+     * @param exp the exponent representing the current digit place (e.g., 1 for units, 10 for tens).
      */
     private static void countingSortByDigit(int[] array, int exp) {
         int n = array.length;
@@ -274,8 +286,11 @@ public class Algorithm {
     }
 
     /**
+     * Implements the Shell Sort algorithm for sorting integers.
+     * It works by comparing elements at a certain gap and progressively
+     * reducing the gap until the array is fully sorted.
      *
-     * @param array
+     * @param array the array of integers to be sorted.
      */
     private static void shellSort(int[] array){
         int n = array.length;
@@ -295,8 +310,11 @@ public class Algorithm {
     }
 
     /**
+     * Implements the Heap Sort algorithm for sorting integers.
+     * It builds a max heap from the array and repeatedly extracts the maximum
+     * element to place it at the end of the array.
      *
-     * @param array
+     * @param array the array of integers to be sorted.
      */
     public static void heapSort(int[] array)
     {
@@ -315,10 +333,11 @@ public class Algorithm {
     }
 
     /**
+     * Restores the max heap property for a subtree rooted at a given index.
      *
-     * @param array
-     * @param n
-     * @param i
+     * @param array the array representing the heap.
+     * @param n the size of the heap.
+     * @param i the index of the root of the subtree.
      */
     private static void heapify(int[] array, int n, int i)
     {
@@ -347,8 +366,11 @@ public class Algorithm {
     }
 
     /**
+     * Implements the Insertion Sort algorithm for sorting integers.
+     * It builds the sorted portion of the array one element at a time
+     * by inserting each new element into its correct position.
      *
-     * @param array
+     * @param array the array of integers to be sorted.
      */
     public static void insertionSort(int[] array)
     {
