@@ -25,7 +25,7 @@ import java.io.IOException;
  * java -cp ".;out;mysql-connector-j-9.1.0.jar" util.Application
  * </pre>
  *
- * @author Imran D.
+ * @author imrandurmus
  */
 public class Application {
 
