@@ -224,13 +224,17 @@ public class Repository {
      * @param first The first name of the new user.
      * @param last  The last name of the new user.
      */
-    public void addUser(String usr, String role, String first, String last) {
+    public void addUser(String usr, String role, String first, String last, String phone, String email, Date dateOfBirth, Date dateOfStart) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, first_name, last_name) VALUES (?, 'password', ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, first_name, last_name, phone_no, email, date_of_birth, date_of_start) VALUES (?, 'password', ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, usr);
             preparedStatement.setString(2, role);
             preparedStatement.setString(3, first);
             preparedStatement.setString(4, last);
+            preparedStatement.setString(5, phone);
+            preparedStatement.setString(6, email);
+            preparedStatement.setDate(7, dateOfBirth);
+            preparedStatement.setDate(8, dateOfStart);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

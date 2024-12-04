@@ -1,5 +1,8 @@
 package util;
 
+import java.sql.Date;
+import java.util.Scanner;
+
 /**
  * Provides utility methods for validating user input data such as phone numbers,
  * email addresses, and passwords.
@@ -73,5 +76,20 @@ public class Validation {
     public boolean isValidName(String name){
         String regex = "^[a-zA-Z]{1,25}$";
         return name.matches(regex);
+    }
+
+    public Date getDateFromUser(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        Date date = null;
+        while (date == null) {
+            System.out.println(prompt + " (format: yyyy-MM-dd):");
+            String input = scanner.nextLine().trim();
+            try {
+                date = Date.valueOf(input);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("Invalid date format. Please try again.");
+            }
+        }
+        return date;
     }
 }

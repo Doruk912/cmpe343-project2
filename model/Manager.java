@@ -198,12 +198,15 @@ public class Manager extends User {
     }
 
     private void hireEmployee() {
-        Repository repo = new Repository();
         System.out.println("Hire Employee");
         System.out.print("Enter username: ");
         String username = scanner.nextLine().trim().toLowerCase();
+        while (!validation.isValidUsername(username)) {
+            System.out.println("Invalid username. Please try again. No numbers, symbols, capital or turkish letters allowed. Min 5, max 20 characters.");
+            username = scanner.nextLine().trim().toLowerCase();
+        }
 
-        if (repo.getUserByUsername(username) != null) {
+        if (repository.getUserByUsername(username) != null) {
             System.out.println("Username already exists. Employee not hired.");
             System.out.println("\nPress enter to continue...");
             scanner.nextLine();
@@ -217,30 +220,58 @@ public class Manager extends User {
         System.out.println("[3] TECHNICIAN");
         System.out.println("[4] INTERN");
         String role = scanner.nextLine().trim();
-        switch (role) {
-            case "1":
-                role = "MANAGER";
-                break;
-            case "2":
-                role = "ENGINEER";
-                break;
-            case "3":
-                role = "TECHNICIAN";
-                break;
-            case "4":
-                role = "INTERN";
-                break;
-            default:
+        role = switch (role) {
+            case "1" -> "MANAGER";
+            case "2" -> "ENGINEER";
+            case "3" -> "TECHNICIAN";
+            case "4" -> "INTERN";
+            default -> {
                 System.out.println("Invalid role. Defaulting to INTERN.");
-                role = "INTERN";
-        }
+                yield "INTERN";
+            }
+        };
 
         System.out.print("Enter first name: ");
         String firstName = scanner.nextLine().trim();
+        while (!validation.isValidName(firstName)) {
+            System.out.println("Invalid name. Please try again.");
+            firstName = scanner.nextLine().trim();
+        }
+
         System.out.print("Enter last name: ");
         String lastName = scanner.nextLine().trim();
+        while (!validation.isValidName(lastName)) {
+            System.out.println("Invalid name. Please try again.");
+            lastName = scanner.nextLine().trim();
+        }
 
-        repo.addUser(username, role, firstName, lastName);
+        System.out.println("Enter phone number (e.g., +1 1234567890):");
+        String phoneNo = scanner.nextLine().trim();
+        while (!validation.isValidPhoneNumber(phoneNo)) {
+            System.out.println("Invalid phone number. Please use the format '+<country code> <10-digit number>'.");
+            System.out.println("Example: +1 1234567890");
+            phoneNo = scanner.nextLine().trim();
+        }
+
+        System.out.println("Enter email:");
+        String email = scanner.nextLine().trim();
+        while (!validation.isValidEmail(email)) {
+            System.out.println("Invalid email. Please try again.");
+            email = scanner.nextLine().trim();
+        }
+
+        Date dateOfBirth = validation.getDateFromUser("Enter date of birth");
+        Date dateOfStart = validation.getDateFromUser("Enter date of start");
+
+        if(dateOfBirth.after(dateOfStart)){
+            System.out.println("Date of birth cannot be after date of start. Employee not hired.");
+            System.out.println("\nPress enter to continue...");
+            scanner.nextLine();
+            clearScreen();
+            return;
+        }
+
+        repository.addUser(username, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
         System.out.println("Employee hired successfully.");
         System.out.println("\nPress enter to continue...");
         scanner.nextLine();
