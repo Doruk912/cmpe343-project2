@@ -194,7 +194,7 @@ public class Algorithm {
             long endTime = System.nanoTime() - startTime;
             totalTime += endTime;
         }
-        return (totalTime/runs)/1000000;
+        return (totalTime/(double)runs)/1_000_000.0;
     }
     /**
      * Implements the Radix Sort algorithm for sorting integers.
