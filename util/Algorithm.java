@@ -215,7 +215,7 @@ public class Algorithm {
         }
 
         if (firstRunSortedArray != null) {
-            saveSortedArrayToFile("algorithmOutput.txt",firstRunSortedArray, algorithmName);
+            saveSortedArrayToFile("algorithmOutput.txt",firstRunSortedArray, algorithm);
         }
         return (totalTime/(double)runs)/1_000_000.0;
     }
