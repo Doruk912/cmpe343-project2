@@ -221,12 +221,19 @@ public class Algorithm {
     }
 
     /**
+     * Saves the sorted values to a file in append mode, along with the algorithm's name.
+     * <p>
+     * Each value is written on a new line. A blank line is added between outputs
+     * to visually separate multiple runs of different algorithms.
+     * The file is created if it does not exist.
+     * <p>
+     * If an error occurs during file writing, an error message is printed to the standard error stream.
      *
-     * @param filename
-     * @param sortedValues
-     * @param algorithmName
+     * @param filename      the name of the file to save the data to.
+     * @param sortedValues  the array of integers to be written to the file.
+     * @param algorithmName the name of the algorithm used to sort the values,
+     *                      which is included in the file for reference.
      */
-
     private void saveToFile(String filename, int[] sortedValues, String algorithmName) {
         try (FileWriter writer = new FileWriter(filename,true)) {
             writer.write("Sorted values for " + algorithmName + ":\n");
