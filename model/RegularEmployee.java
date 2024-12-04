@@ -1,11 +1,14 @@
 package model;
 
+import util.Validation;
+
 import java.sql.Date;
 import java.util.Scanner;
 
 public abstract class RegularEmployee extends User{
 
     Scanner scanner = new Scanner(System.in);
+    Validation validation = new Validation();
 
     public RegularEmployee(int userId, String username, String password, String role, String firstName, String lastName, String phoneNo, String email, Date dateOfBirth, Date dateOfStart) {
         super(userId, username, password, role, firstName, lastName, phoneNo, email, dateOfBirth, dateOfStart);
@@ -105,8 +108,13 @@ public abstract class RegularEmployee extends User{
                 clearScreen();
                 break;
             case "2":
-                System.out.println("Enter new phone number:");
+                System.out.println("Enter the new phone number (e.g., +1 1234567890):");
                 input = scanner.nextLine().trim();
+                while (!validation.isValidPhoneNumber(input)) {
+                    System.out.println("Invalid phone number. Please use the format '+<country code> <10-digit number>'.");
+                    System.out.println("Example: +1 1234567890");
+                    input = scanner.nextLine().trim();
+                }
                 this.setPhoneNo(input);
                 System.out.println("Phone number updated.");
                 System.out.println("\nPress enter to continue...");
@@ -116,6 +124,10 @@ public abstract class RegularEmployee extends User{
             case "3":
                 System.out.println("Enter new email:");
                 input = scanner.nextLine().trim();
+                while (!validation.isValidEmail(input)) {
+                    System.out.println("Invalid email. Please try again.");
+                    input = scanner.nextLine().trim();
+                }
                 this.setEmail(input);
                 System.out.println("Email updated.");
                 System.out.println("\nPress enter to continue...");
