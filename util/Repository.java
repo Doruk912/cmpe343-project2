@@ -5,12 +5,29 @@ import model.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Provides database-related operations for managing {@link User} objects.
+ * This class handles connections to a MySQL database and allows for CRUD operations
+ * such as retrieving, adding, and removing users from the database.
+ *
+ * <p><b>Features:</b>
+ * <ul>
+ *     <li>Retrieve user details by ID or username</li>
+ *     <li>Fetch all users</li>
+ *     <li>Add or remove users</li>
+ *     <li>Role-specific user object instantiation (e.g., Manager, Engineer)</li>
+ * </ul>
+ * @author imrandurmus
+ */
 public class Repository {
     private final String url = "jdbc:mysql://localhost:3306/cmpe343";
     private final String username = "root";
     private final String password = "admin";
     private Connection connection;
 
+    /**
+     * Initializes a {@code Repository} instance and establishes a connection to the database.
+     */
     public Repository() {
         try {
             connection = DriverManager.getConnection(url, username, password);
@@ -19,6 +36,12 @@ public class Repository {
         }
     }
 
+    /**
+     * Retrieves a {@link User} by their unique ID from the database.
+     *
+     * @param userId The unique identifier of the user.
+     * @return A {@link User} object representing the user, or {@code null} if no user is found.
+     */
     public User getUserById(int userId) {
         User user = null;
         String query = "SELECT * FROM users WHERE user_id = ?";
@@ -92,6 +115,12 @@ public class Repository {
         return user;
     }
 
+    /**
+     * Retrieves a {@link User} by their username from the database.
+     *
+     * @param username The username of the user.
+     * @return A {@link User} object representing the user, or {@code null} if no user is found.
+     */
     public User getUserByUsername(String username) {
         User user = null;
         String query = "SELECT * FROM users WHERE username = ?";
@@ -165,6 +194,11 @@ public class Repository {
         return user;
     }
 
+    /**
+     * Retrieves all users from the database.
+     *
+     * @return An {@link ArrayList} containing all {@link User} objects, or {@code null} if an error occurs.
+     */
     public ArrayList<User> getAllUsers() {
         try {
             ArrayList<User> users = new ArrayList<User>();
@@ -182,6 +216,14 @@ public class Repository {
         }
     }
 
+    /**
+     * Adds a new user to the database.
+     *
+     * @param usr   The username of the new user.
+     * @param role  The role of the new user (e.g., "MANAGER", "ENGINEER").
+     * @param first The first name of the new user.
+     * @param last  The last name of the new user.
+     */
     public void addUser(String usr, String role, String first, String last) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users (username, password, role, first_name, last_name) VALUES (?, 'password', ?, ?, ?)");
@@ -195,6 +237,11 @@ public class Repository {
         }
     }
 
+    /**
+     * Removes a user from the database by their unique ID.
+     *
+     * @param user_id The unique identifier of the user to be removed.
+     */
     public void removeUser(int user_id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE user_id = ?");
