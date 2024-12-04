@@ -1,12 +1,15 @@
 package util;
 
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import static util.Application.clearScreen;
+
 
 /**
  * The {@code Algorithm} class benchmarks various sorting algorithms, verifies their correctness using Java's default sorting algorithm,
@@ -21,7 +24,7 @@ import static util.Application.clearScreen;
  * </ul>
  * It generates a random dataset, validates the sorting algorithms, and times their performance over multiple runs.
  * </p>
- * @author Imran D.
+ * @author imrandurmus
  */
 public class Algorithm {
 
@@ -183,6 +186,8 @@ public class Algorithm {
      */
     private double timeKeeper(int[] dataset, String algorithm, int runs) {
         long totalTime = 0;
+        int[] firstRunSortedArray = null;
+
         for (int i = 0; i < runs; i++) {
             int[] dataCopy = dataset.clone();
             long startTime = System.nanoTime();
@@ -204,9 +209,31 @@ public class Algorithm {
             }
             long endTime = System.nanoTime() - startTime;
             totalTime += endTime;
+            if (i == 0) {
+                firstRunSortedArray = dataCopy;
+            }
+        }
+
+        if (firstRunSortedArray != null) {
+            saveSortedArrayToFile("algorithmOutput.txt",firstRunSortedArray, algorithmName);
         }
         return (totalTime/(double)runs)/1_000_000.0;
     }
+
+
+    private void saveToFile(String filename, int[] sortedValues, String algorithmName) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("Sorted values for " + algorithmName + ":\n");
+            for (int value : sortedValues) {
+                writer.write(value + System.lineSeparator());
+            }
+            System.out.println("Sorted values for " + algorithmName + " saved to " + filename);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+
     /**
      * Implements the Radix Sort algorithm for sorting integers.
      * It uses counting sort as a subroutine to sort the array by each digit,
